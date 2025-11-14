@@ -1,0 +1,120 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -112
+      ],
+      "id": "6e4ecf5a-014e-4ade-853d-12096191d8c0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        80
+      ],
+      "id": "ab366c3d-7019-4612-92ad-7581b89a4c0e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qNJjkbXL8EgPm5RZ",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Write an post on global warming.",
+        "options": {
+          "systemMessage": "You are linkedIn post generator, your role is to generate a linkedIn post based on given topic, You have to generate 200 words post."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        -112
+      ],
+      "id": "fd3d6e31-677d-46b1-b7b6-4dd2a365a90c",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "person": "PJLq2gSAKA",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -112
+      ],
+      "id": "67d86fb2-ba7d-4f4a-b4d5-6d3860c13642",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "dnL7IMMS0ma4JySU",
+          "name": "LinkedIn account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "868d83f9-6683-40a2-972e-01e9a8531ac9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2b9cb1d21fc67b485ff94ac9fb8d46f200614abfb226c98e82523f4fdf58b079"
+  },
+  "id": "r4gFdjMrPU90rbyR",
+  "tags": []
+}
